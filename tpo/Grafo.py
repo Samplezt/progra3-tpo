@@ -2,6 +2,8 @@ from Nodo import Nodo
 
 
 class Grafo:
+    
+    
     def __init__(self, name = " "):
         self.name = name
         self.nodes = []
@@ -14,6 +16,8 @@ class Grafo:
 
     def set_name(self, name):
         self.name = name
+        
+        
 
     def dfs(self, node):
         str = " | "
@@ -29,8 +33,11 @@ class Grafo:
                 if(not e.get_dest().is_visited()):
                     stack.append(e.get_dest())
                     e.get_dest().set_visited()
+                
                     
         print(str)
+        
+        
         
     def bfs(self, node):
         str = " | "
@@ -48,6 +55,8 @@ class Grafo:
                     e.get_dest().set_visited()
                     
         print(str)
+        
+        
         
     def prim(self, node):
         l = []
@@ -71,42 +80,3 @@ class Grafo:
                 for e in n.edge_list():
                     if(not e.get_dest().is_visited()):
                         l.append(e)
-
-    def dijkstra(self, node):
-        l = []
-        node.set_visited()
-        node.set_distance(0)
-        l.append(node)
-        
-        while(len(l) > 0):
-            n = l.pop(0)
-            for ed in n.edge_list():
-                if(ed.get_start().get_distance() + ed.get_weight() < ed.get_dest().get_distance()):
-                    ed.get_dest().set_distance(ed.get_start().get_distance() + ed.get_weight())
-                    
-            min_dist = Nodo("Aux")
-            for nd in self.nodes:
-                if(not nd.is_visited() and min_dist.get_distance() > nd.get_distance()):
-                    min_dist = nd
-                    
-            if(not min_dist.get_name() == "Aux"):
-                min_dist.set_visited()
-                l.append(min_dist)
-        print(len(l))
-    
-    def kruskal(self):
-        ed = []
-        for node in self.nodes:
-            for edge in node.edge_list():
-                ed.append(edge)
-        
-        while(len(ed) > 0):
-            m = ed[0]
-            for edge in ed:
-                if(edge.get_weight() < m.get_weight()):
-                    m = edge
-            ed.remove(m)
-            if(not m.get_start().is_visited() or not m.get_dest().is_visited()):
-                print(m.get_start().get_name() + " - " + m.get_dest().get_name())
-                m.get_start().set_visited()
-                m.get_dest().set_visited()
